@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SpicyThai.Models;
 
 namespace SpicyThai.Data
 {
@@ -12,5 +13,7 @@ namespace SpicyThai.Data
             : base(options)
         {
         }
+
+        public DbSet<Category> Category { get; set; }
     }
 }
