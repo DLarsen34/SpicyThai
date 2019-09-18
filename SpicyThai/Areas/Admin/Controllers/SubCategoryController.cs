@@ -15,6 +15,9 @@ namespace SpicyThai.Areas.Admin.Controllers
     public class SubCategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public SubCategoryController(ApplicationDbContext db)
         {
             _db = db;
@@ -39,7 +42,6 @@ namespace SpicyThai.Areas.Admin.Controllers
             return View(model);
         }
         //Post Create
-        public string statusMessage { get; set; }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SubCategoryAndCategoryViewModel model)
@@ -49,7 +51,8 @@ namespace SpicyThai.Areas.Admin.Controllers
                 var doesSubCategoryExist = _db.SubCategory.Include(s => s.Category).Where(s => s.Name == model.SubCategory.Name && s.CategoryId == model.SubCategory.CategoryId);
                 if (doesSubCategoryExist.Count() > 0)
                 {
-                    statusMessage = "Error: SubCategory Exists under " + doesSubCategoryExist.First().Category.Name + " category. Please choose another name.";
+                    //Error
+                    StatusMessage = "Error: SubCategory Exists under " + doesSubCategoryExist.First().Category.Name + " category. Please choose another name.";
                 }
                 else
                 {
@@ -62,9 +65,10 @@ namespace SpicyThai.Areas.Admin.Controllers
 
             SubCategoryAndCategoryViewModel modelVM = new SubCategoryAndCategoryViewModel()
             {
+                CategoryList = await _db.Category.ToListAsync(),
                 SubCategory = model.SubCategory,
                 SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).ToListAsync(),
-                StatusMessage = statusMessage
+                StatusMessage = StatusMessage
             };
             return View(modelVM);
         }
