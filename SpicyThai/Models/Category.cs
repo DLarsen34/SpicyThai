@@ -9,7 +9,7 @@ namespace SpicyThai.Models
     public class Category
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name="Category Name")]
