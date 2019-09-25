@@ -2,25 +2,26 @@
 @using SpicyThai.Extensions
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <br />
-<h2 class="text-info">Create Sub-Category</h2>
+<h2 class="text-info">Edit Sub-Category</h2>
 <br />
 
 <div class="border backgroundWhite row">
     <partial name="_StatusMessage" model="Model.StatusMessage" />
     <div class="col-8 border-right">
-        <form asp-action="Create">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="SubCategory.CategoryId" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group row">
                 <div class="col-3">
                     <label asp-for="SubCategory.CategoryId" class="col-form-label"></label>
                 </div>
                 <div class="col-5">
-                    <select id="ddlCategoryList" asp-for="SubCategory.CategoryId" asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)" class="form-control"> </select>
+                    <select disabled id="ddlCategoryList" asp-for="SubCategory.CategoryId" asp-items="Model.CategoryList.ToSelectListItem(Model.SubCategory.CategoryId)" class="form-control"> </select>
                 </div>
             </div>
             <div class="form-group row">
@@ -34,17 +35,17 @@
             </div>
             <div class="form-group row">
                 <div class="col-5 offset-3">
-                    <partial name="_CreateAndBackToListButton" />
+                    <partial name="_EditAndBackToListButton" model="Model.SubCategory.Id" />
                 </div>
             </div>
         </form>
     </div>
     <div class="col-3 offset-1">
-        @if(Model.SubCategoryList.Count() > 0)
+        @if (Model.SubCategoryList.Count() > 0)
         {
             <p>Existing Subcategories</p>
             <div id="SubCategoryList">
-               
+
             </div>
         }
     </div>
@@ -54,7 +55,7 @@
 {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-<script>
+    <script>
     function updateSubCategoryList()
     {
         var categorySelected = document.getElementById("ddlCategoryList").value;
@@ -79,11 +80,6 @@
     {
         updateSubCategoryList();
     });
-
-    $("#ddlCategoryList").on("change", function ()
-    {
-        updateSubCategoryList();
-    });
-</script>
+    </script>
 }
 
