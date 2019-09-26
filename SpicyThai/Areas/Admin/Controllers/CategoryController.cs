@@ -62,7 +62,8 @@ namespace SpicyThai.Areas.Admin.Controllers
             }
             return View(category);
         }
-
+        
+        //Post Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Category category)
