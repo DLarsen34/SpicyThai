@@ -63,7 +63,7 @@
                 <label asp-for="MenuItem.SubCategoryId" class="col-form-label"></label>
             </div>
             <div class="col-5">
-                <select asp-for="@Model.MenuItem.SubCategoryId" id="subCategoryId" name="subCategoryId" 
+                <select asp-for="@Model.MenuItem.SubCategoryId" id="SubCategoryId" name="SubCategoryId" 
                         asp-items="@(new SelectList(string.Empty, "Id", "Name"))" 
                         class="form-control">
                 </select>
@@ -86,3 +86,39 @@
         </div>
     </div>
 </form>
+
+@section Scripts{ 
+<script>
+    tinymce.init({
+        selector: "textarea",
+        toolbarButtons: [['undo', 'redo'], ['paragraphFormat'], ['bold', 'italic'],
+        ['alignLeft', 'alignCenter', 'alignRight', 'alignJustify'],
+        ['formatOL', 'formatUL'], ['indent', 'outdent']],
+        menubar: "file edit format"
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        getSubCategory();
+        $('#CategoryId').change(function () {
+            getSubCategory();
+        });
+    });
+
+    function getSubCategory() {
+        var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+        var ddlSource = '#CategoryId';
+        $.getJSON(url, { id: $(ddlSource).val() }, function (data) {
+            var items = "";
+            $('#SubCatgoryId').empty();
+            $.each(data, function (i, subcategory) {
+                items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>"
+            });
+            $('#SubCategoryId').html(items);
+        });
+    }
+</script>
+
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
