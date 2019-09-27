@@ -186,5 +186,56 @@ namespace SpicyThai.Areas.Admin.Controllers
             }
             return View(MenuItemVM);
         }
+
+        //Get Delete
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            MenuItemVM.MenuItem = await
+                 _db.MenuItem
+                 .Include(m => m.Category)
+                 .Include(m => m.SubCategory)
+                 .SingleOrDefaultAsync(m => m.Id == id);
+
+            MenuItemVM.SubCategory = await
+                _db.SubCategory.Where(s => s.CategoryId == MenuItemVM.MenuItem.CategoryId).ToListAsync();
+
+            if (MenuItemVM.MenuItem == null)
+            {
+                return NotFound();
+            }
+            return View(MenuItemVM);
+        }
+
+        //Delete Post
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            var menuItem = await _db.MenuItem.FindAsync(id);
+            if (menuItem == null)
+            {
+                return View();
+            }
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+            var menuItemFromDb = await
+                _db.MenuItem.FindAsync(MenuItemVM.MenuItem.Id);
+            if (files.Count > 0)
+            {
+                //Delete the old file
+                var imagePath = Path.Combine(webRootPath, menuItemFromDb.Image.TrimStart('\\'));
+                if (System.IO.File.Exists(imagePath))
+                {
+                    System.IO.File.Delete(imagePath);
+                }
+            }
+            _db.Remove(menuItem);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
