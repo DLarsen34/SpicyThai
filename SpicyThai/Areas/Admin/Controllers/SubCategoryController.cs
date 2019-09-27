@@ -162,13 +162,44 @@ namespace SpicyThai.Areas.Admin.Controllers
             };
 
             return View(model);
-            //var subCategory = await _db.SubCategory.FindAsync(id);
+        }
 
-            //if (subCategory == null)
-            //{
-            //    return NotFound();
-            //}
-            //return View(subCategory);
+        //Get Delete
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var subCategory = await _db.SubCategory.SingleOrDefaultAsync(m => m.Id == id);
+            if (subCategory == null)
+            {
+                return NotFound();
+            }
+
+            SubCategoryAndCategoryViewModel model = new SubCategoryAndCategoryViewModel()
+            {
+                CategoryList = await _db.Category.ToListAsync(),
+                SubCategory = subCategory,
+                SubCategoryList = await _db.SubCategory.OrderBy(p => p.Name).Select(p => p.Name).Distinct().ToListAsync()
+            };
+
+            return View(model);
+        }
+
+        //Delete Post
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            var subCategory = await _db.SubCategory.FindAsync(id);
+            if (subCategory == null)
+            {
+                return View();
+            }
+            _db.Remove(subCategory);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
