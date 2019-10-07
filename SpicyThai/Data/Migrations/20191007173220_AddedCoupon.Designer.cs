@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SpicyThai.Data;
 
 namespace SpicyThai.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191007173220_AddedCoupon")]
+    partial class AddedCoupon
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -207,7 +209,7 @@ namespace SpicyThai.Data.Migrations
                     b.Property<string>("CouponType")
                         .IsRequired();
 
-                    b.Property<double>("DiscountAmount");
+                    b.Property<double>("DiscoutAmount");
 
                     b.Property<bool>("IsActive");
 
