@@ -98,5 +98,51 @@ namespace SpicyThai.Areas.Admin.Controllers
             }
             return View(coupon);
         }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var coupon = await _db.Coupon.FindAsync(id);
+
+            if (coupon == null)
+            {
+                return NotFound();
+            }
+            return View(coupon);
+        }
+
+        //Get Delete
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var coupon = await _db.Coupon.FindAsync(id);
+
+            if (coupon == null)
+            {
+                return NotFound();
+            }
+            return View(coupon);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            var coupon = await _db.Coupon.FindAsync(id);
+            if(coupon == null)
+            {
+                return View();
+            }
+             _db.Remove(coupon);
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
