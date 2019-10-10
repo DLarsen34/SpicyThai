@@ -3,12 +3,12 @@
 @if (Model.Coupon.ToList().Count > 0)
 {
     <div class="border">
-        <div class="carousel" data-ride="carousel" data-interval="2500">
+        <div class="carousel" data-ride="carousel" data-interval="2500" style="height:150px">
             @for (int i = 0; i < Model.Coupon.Count(); i++)
             {
                 if (i == 0) //first coupon
                 {
-                    <div class="carousel-item active">
+                    <div class="carousel-item active" style="height:150px">
                         @{
                             var base64 = Convert.ToBase64String(Model.Coupon.ToList()[i].Picture);
                             var imgscr = string.Format("data:image/jpg;base64,{0}", base64);
@@ -19,7 +19,7 @@
                 }
                 else
                 {
-                    <div class="carousel-item">
+                    <div class="carousel-item" style="height:150px">
 
                         @{
                             var base64 = Convert.ToBase64String(Model.Coupon.ToList()[i].Picture);

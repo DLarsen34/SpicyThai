@@ -55,5 +55,48 @@ namespace SpicyThai.Areas.Admin.Controllers
             }
             return View(coupons);
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var coupon = await _db.Coupon.FindAsync(id);
+
+            if (coupon == null)
+            {
+                return NotFound();
+            }
+            return View(coupon);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Coupon coupon)
+        {
+            if (ModelState.IsValid)
+            {
+                var files = HttpContext.Request.Form.Files;
+                if (files.Count > 0)
+                {
+                    byte[] pic = null;
+                    using (var fs = files[0].OpenReadStream())
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            fs.CopyTo(ms);
+                            pic = ms.ToArray();
+                        }
+                    }
+                    coupon.Picture = pic;
+                }
+                _db.Coupon.Update(coupon);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(coupon);
+        }
     }
 }
