@@ -13,3 +13,8 @@ Everything is starting to make sense, it's a lot to take in but everything is co
 The image stuff was a little difficult to grasp at first and I struggled mostly with the delete method of
 menu item. For a while I was getting an error when I would try to delete a menuItem that didn't have an image associated
 with it or had just the defaut image associated with it. But I eventually figured out. 
+
+ST-4
+This was pretty easy adding the edit, details, and delete pages since we have done it 3 other times now. I found it really easy as well
+to add the coupon images to the edit, details, and delete pages. I like just uploading the image to the database rather than saving it
+as a file in wwwroot. Makes dealing with the deleation and editing of the image a lot easier when you don't have to change the image path.
