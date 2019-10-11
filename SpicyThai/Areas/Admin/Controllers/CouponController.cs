@@ -140,7 +140,8 @@ namespace SpicyThai.Areas.Admin.Controllers
             {
                 return View();
             }
-             _db.Remove(coupon);
+            coupon.IsActive = false;
+            _db.Update(coupon);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
