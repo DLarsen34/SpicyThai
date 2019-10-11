@@ -11,6 +11,14 @@
 <form method="post" enctype="multipart/form-data" asp-action="Delete">
     <div class="border backgroundWhite">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-12">
+            @{
+                var base64 = Convert.ToBase64String(Model.Picture);
+                var imgscr = string.Format("data:image/jpg;base64,{0}", base64);
+            }
+            <img src="@imgscr" height="150" class="d-block w-100" />
+        </div>
+        <br />
         <div class="form-group row">
             <div class="col-2">
                 <label asp-for="Name" class="col-form-label"></label>
