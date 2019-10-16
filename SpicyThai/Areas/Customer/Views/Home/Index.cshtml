@@ -6,71 +6,65 @@
         <div class="carousel" data-ride="carousel" data-interval="2500" style="height:150px">
             @for (int i = 0; i < Model.Coupon.Count(); i++)
             {
-                if (i == 0) //first coupon
+                if (i == 0)  //first coupoun
                 {
-                    <div class="carousel-item active" style="height:150px">
+                    <div class="carousel-item active">
                         @{
                             var base64 = Convert.ToBase64String(Model.Coupon.ToList()[i].Picture);
                             var imgscr = string.Format("data:image/jpg;base64,{0}", base64);
                         }
-
                         <img src="@imgscr" height="150" class="d-block w-100" />
                     </div>
                 }
                 else
                 {
-                    <div class="carousel-item" style="height:150px">
-
+                    <div class="carousel-item">
                         @{
                             var base64 = Convert.ToBase64String(Model.Coupon.ToList()[i].Picture);
                             var imgscr = string.Format("data:image/jpg;base64,{0}", base64);
                         }
-
                         <img src="@imgscr" height="150" class="d-block w-100" />
                     </div>
                 }
-
             }
         </div>
     </div>
 }
-
-<br/><br/>
+<br />
+<br />
 <div class="backgroundWhite container">
     <ul id="menu-filters" class="menu-filter-list list-inline text-center">
         <li class="active btn btn-secondary ml-1 mr-1" data-filter=".menu-restaurant">Show All</li>
-        @foreach(var item in Model.Category)
+        @foreach (var item in Model.Category)
         {
-            <li class="btn btn-secondary ml-1 mr-1" data-fiter=".@item.Name.Replace(" ",string.Empty)">@item.Name</li>
+            <li class="ml-1 mr-1" data-filter=".@item.Name.Replace(" ",string.Empty)">@item.Name</li>
         }
     </ul>
     @foreach (var item in Model.Category)
     {
         <div class="row" id="menu-wrapper">
-            <partial name="_MenuItemThumbnailPartialView" 
+            <partial name="_MenuItemThumbnailPartialView"
                      model="@Model.MenuItem.Where(m=>m.Category.Name.Equals(item.Name))" />
         </div>
     }
 </div>
 
 @section Scripts{
-<script 
-        src="http://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
-
-<script>
-    var posts = $('.post');
-    (function ($) {
-        $("#menu-filters li").click(function () {
-            $("#menu-filters li").removeClass('active btn btn-secondary'); //from all
-            $(this).addClass('active brn btn-secondary');
-            var selectedFilter = $(this).data("filter");
-            $(".menu-restaurant").fadeOut();
-            setTimeout(function () {
-                $(selectedFilter).slideDown();
-            }, 300);
-        });
-    })(jQuery);
-</script>
+    <script src="http://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+    <script>
+        var posts = $('.post');
+        (function ($) {
+            $("#menu-filters li").click(function () {
+                $("#menu-filters li").removeClass('active btn btn-secondary'); //from all
+                $(this).addClass('active btn btn-secondary');  //one clicked
+                var selectedFilter = $(this).data("filter");
+                $(".menu-restaurant").fadeOut();
+                setTimeout(function () {
+                    $(selectedFilter).slideDown();
+                }, 300);
+            });
+        })(jQuery);
+    </script>
 }
