@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpicyThai.Data;
 using SpicyThai.Models;
+using SpicyThai.Utility;
 
 namespace SpicyThai.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles=SD.ManagerUser)]
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _db;
