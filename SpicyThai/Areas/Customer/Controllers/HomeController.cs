@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SpicyThai.Data;
@@ -9,6 +10,7 @@ using SpicyThai.Models.ViewModels;
 
 namespace SpicyThai.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -18,7 +20,6 @@ namespace SpicyThai.Controllers
             _db = db;
         }
 
-        [Area("Customer")]
         public async Task<IActionResult> Index()
         {
             IndexViewModel IndexViewModel = new IndexViewModel()
@@ -44,6 +45,22 @@ namespace SpicyThai.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Details(int id)
+        {
+            var menuItemFromDb = await _db.MenuItem
+                                        .Include(m => m.Category)
+                                        .Include(m => m.SubCategory)
+                                        .Where(m => m.Id == id)
+                                        .FirstOrDefaultAsync();
+            ShoppingCart cartObj = new ShoppingCart()
+            {
+                MenuItem = menuItemFromDb,
+                MenuItemId = menuItemFromDb.Id
+            };
+            return View(cartObj);
         }
     }
 }
