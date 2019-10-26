@@ -18,3 +18,7 @@ ST-4
 This was pretty easy adding the edit, details, and delete pages since we have done it 3 other times now. I found it really easy as well
 to add the coupon images to the edit, details, and delete pages. I like just uploading the image to the database rather than saving it
 as a file in wwwroot. Makes dealing with the deleation and editing of the image a lot easier when you don't have to change the image path.
+
+ST-5
+It was nice learing how to do the log in and registering functionality and seeing how it is done and thinking to myself while learning 
+this how I could use it for our group project. It'll be cool to see the differences between what we did here and what our group does for the group project.
