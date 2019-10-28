@@ -22,3 +22,7 @@ as a file in wwwroot. Makes dealing with the deleation and editing of the image 
 ST-5
 It was nice learing how to do the log in and registering functionality and seeing how it is done and thinking to myself while learning 
 this how I could use it for our group project. It'll be cool to see the differences between what we did here and what our group does for the group project.
+
+ST-6
+It was nice to get the functionality of the Spicy Thai cart down and finished for the most part. Sessions are an interesting concept in C#
+and I look forward to learning more about them and seeing if I can incorperate them into our group project. Spicy Thai was a great learing experience along with the other tutorials that we did. And I look forward to starting our group project.
