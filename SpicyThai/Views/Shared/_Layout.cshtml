@@ -1,4 +1,6 @@
 ﻿@using SpicyThai.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,8 +57,12 @@
                         }
                         <li style="color:white">
                             <a href="#" class="nav-link">
+                                @{ 
+                                    var count =
+                                        HttpContextAccessor.HttpContext.Session.GetInt32(@SD.ssShoppingCartCount);
+                                }
                                 <i class="fas fa-shopping-cart"></i>
-                                &nbsp; (0)
+                                &nbsp; (@count)
                             </a>
                         </li>
                     </ul>

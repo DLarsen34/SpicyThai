@@ -14,7 +14,7 @@ namespace SpicyThai.Models
             Count = 1;
         }
         public int Id { get; set; }
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
         [NotMapped]
         [ForeignKey("ApplicationUserId")]
         public virtual ApplicationUser ApplicationUser { get; set; }

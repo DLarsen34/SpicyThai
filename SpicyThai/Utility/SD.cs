@@ -12,5 +12,6 @@ namespace SpicyThai.Utility
         public const string KitchenUser = "Kitchen";
         public const string FrontDeskUser = "Front Desk";
         public const string CustomerEndUser = "Customer";
+        public const string ssShoppingCartCount = "ssCartCount";
     }
 }
